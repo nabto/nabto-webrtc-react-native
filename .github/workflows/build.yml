@@ -34,11 +34,6 @@ jobs:
       - name: Setup Android Files
         run: bunx expo prebuild --bun
 
-      - name: Configure Gradle Memory
-        run: |
-          sed -i '/org.gradle.jvmargs/d' android/gradle.properties
-          echo "org.gradle.jvmargs=-Xmx4096m -XX:MaxMetaspaceSize=1024m" >> android/gradle.properties
-
       - name: Build Android
         working-directory: ./android
-        run: ./gradlew build
+        run: ./gradlew assembleRelease
