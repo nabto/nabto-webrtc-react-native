@@ -1,24 +1,44 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { Stack } from "expo-router";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { StatusBar } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import "react-native-get-random-values";
+import { NotifierWrapper } from "react-native-notifier";
+import { registerGlobals } from "react-native-webrtc";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import translationEN from "../locales/english.json";
 
-export const unstable_settings = {
-  anchor: '(tabs)',
+registerGlobals();
+
+const resources = {
+  en: { translation: translationEN }
 };
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "en",
+  fallbackLng: "en",
+  interpolation: {
+    escapeValue: false
+  }
+});
+
+export default function Layout() {
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <GestureHandlerRootView>
+      <NotifierWrapper>
+        <ThemeProvider value={DefaultTheme}>
+          <StatusBar />
+          <GestureHandlerRootView>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack>
+          </GestureHandlerRootView>
+        </ThemeProvider>
+      </NotifierWrapper>
+    </GestureHandlerRootView>
   );
 }

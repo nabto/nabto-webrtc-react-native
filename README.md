@@ -1,50 +1,56 @@
-# Welcome to your Expo app 👋
+# Welcome to the react native demo of Nabto WebRTC Signaling
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Intro:
+
+This showcases a react native demo for android and ios.
 
 ## Get started
+Prerequisites:
+* Install bun from [bun.sh]()
 
-1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+### Install dependencies and generate development build
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+bun install
+bunx expo prebuild
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Start android app
 
-## Learn more
+```
+bun run android
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### Start ios
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+bun run ios
+```
 
-## Join the community
+### Build an android release apk:
 
-Join our community of developers creating universal apps.
+```
+bunx expo eject
+cd android && ./gradlew assembleRelease
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Speed up native iOS build time
+
+The native iOS build is very slow (Android might be as well). [This guide](https://reactnative.dev/docs/build-speed) describes how to speed it up using `ccache`. In practice, build time reduction from several minutes to a few seconds is observed. The procedure boils down to the following:
+
+Install `ccache`:
+
+```
+brew install ccache
+```
+
+Enable `ccache` support in the build - either edit `ios/Podfile.properties.json` or add a local version, `ios/Podfile.properties.local.json`:
+
+```
+{
+  "apple.ccacheEnabled": "true"
+}
+```
+
+Then do a clean build and observe faster subsequent builds.
