@@ -62,4 +62,4 @@ jobs:
 
       - name: Build iOS
         working-directory: ./ios
-        run: xcodebuild -workspace *.xcworkspace -scheme *.xcscheme -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO
+        run: xcodebuild -workspace *.xcworkspace -scheme NabtoWebRTC -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO
