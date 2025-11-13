@@ -273,8 +273,7 @@ export default function Tab() {
           style={{
             flex: 1,
             width: "100%",
-            height: "100%",
-            backgroundColor: "purple"
+            height: "100%"
           }}>
         </RTCView>
 
