@@ -111,6 +111,10 @@ export default function Tab() {
   const [productId, setProductId] = useState("");
   const [sharedSecret, setSharedSecret] = useState("");
 
+  // We use a key on the RTCView to force a component remount due to a crash on android
+  // See: https://github.com/react-native-webrtc/react-native-webrtc/issues/1768
+  const [rtcViewKey, setRtcViewKey] = useState(0);
+
   //////////////////////////////////////////////////////
   // Connection state
   const {
@@ -148,6 +152,7 @@ export default function Tab() {
   // Connect and disconnect button callbacks
   const onConnectPressed = useCallback((d: string, p: string, s: string) => {
     console.log("onconnectpressed called")
+    setRtcViewKey(prev => prev + 1);
     startConnection({
      deviceId: d,
      productId: p,
@@ -268,6 +273,7 @@ export default function Tab() {
         backgroundColor: "black"
       }}>
         <RTCView
+          key={rtcViewKey}
           objectFit="contain"
           streamURL={mediaStream?.toURL()}
           style={{
